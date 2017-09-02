@@ -34,9 +34,9 @@ class Rocket {
 
 
 class DataManager {
-    let url = URL(string: "http://api.spacexdata.com/v1/launches")!
+    private let url = URL(string: "http://api.spacexdata.com/v1/launches")!
     
-    let session:URLSession = {
+    private let session:URLSession = {
         let configuration = URLSessionConfiguration.ephemeral
         let session = URLSession(configuration: configuration)
         return session
