@@ -34,16 +34,16 @@ class Rocket {
 
 
 class DataManager {
-    private let url = URL(string: "http://api.spacexdata.com/v1/launches")!
+    static private let url = URL(string: "http://api.spacexdata.com/v1/launches")!
     
-    private let session:URLSession = {
+    static private let session:URLSession = {
         let configuration = URLSessionConfiguration.ephemeral
         let session = URLSession(configuration: configuration)
         return session
     }()
     
     func fetchRocketData(completionHandler:@escaping (Result)->Void){
-        session.dataTask(with: url) { (data, response, error) in
+        DataManager.session.dataTask(with: DataManager.url) { (data, response, error) in
             guard let jsonData = data else {
                 OperationQueue.main.addOperation {
                     completionHandler(Result.failure(error!))
@@ -58,7 +58,7 @@ class DataManager {
         }.resume()
     }
     
-    func parseJson(jsonData:Data)->Result{
+    private func parseJson(jsonData:Data)->Result{
         guard let toplevelObject = try! JSONSerialization.jsonObject(with: jsonData, options: []) as? [Dictionary<String,Any>] else {
             return (Result.failure(RocketDataError.invalidData))
          
