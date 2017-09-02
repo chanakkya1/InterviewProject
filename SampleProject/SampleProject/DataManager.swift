@@ -59,20 +59,26 @@ class DataManager {
     }
     
     private func parseJson(jsonData:Data)->Result{
-        guard let toplevelObject = try! JSONSerialization.jsonObject(with: jsonData, options: []) as? [Dictionary<String,Any>] else {
-            return (Result.failure(RocketDataError.invalidData))
-         
-        }
-        var rocketDataArray = [Rocket]()
-        for dict in toplevelObject{
-            guard let flightNumber = dict["flight_number"] as? Int,
-                let launchDate = dict["launch_date_utc"] as? String else{
-                    continue
+        
+        do {
+            guard let toplevelObject = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [Dictionary<String,Any>] else {
+                 return (Result.failure(RocketDataError.invalidData))
+                }
+            var rocketDataArray = [Rocket]()
+            for dict in toplevelObject{
+                guard let flightNumber = dict["flight_number"] as? Int,
+                    let launchDate = dict["launch_date_utc"] as? String else{
+                        continue
+                }
+                let details = dict["details"] as? String
+                
+                rocketDataArray.append(Rocket(flightNumber: flightNumber, launchdate: launchDate, details: details))
             }
-            let details = dict["details"] as? String
-            
-           rocketDataArray.append(Rocket(flightNumber: flightNumber, launchdate: launchDate, details: details))
+            return Result.success(rocketDataArray)
+        }catch{
+            return (Result.failure(error))
         }
-        return Result.success(rocketDataArray)
+        
+        
     }
 }
