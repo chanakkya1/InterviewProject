@@ -8,7 +8,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+protocol RocketDetailDataProtocol {
+    var rocket:Rocket!{ get  set}
+}
+
+class ViewController: UIViewController,RocketDetailDataProtocol {
 
     @IBOutlet var detailsLabel: UILabel!
     @IBOutlet var flightNoLable: UILabel!

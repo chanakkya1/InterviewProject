@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class RocketTableViewController: UITableViewController {
 
     let rocketdataSource = RocketTableViewDataSourec()
@@ -39,12 +41,20 @@ class RocketTableViewController: UITableViewController {
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let index = self.tableView.indexPathForSelectedRow{
-          let detailViewController =  segue.destination as! ViewController
-          detailViewController.rocket = rocketdataSource.rocketData[index.row]
-        }else{
-            fatalError("segue trigerred without a selected cell")
+        switch segue.identifier {
+            
+            case "DetailSegue"?:
+                
+            if let index = self.tableView.indexPathForSelectedRow,var destination = segue.destination as? RocketDetailDataProtocol{
+                destination.rocket = rocketdataSource.rocketData[index.row]
+            }
+            
+            default:
+               fatalError("Undefined Segue")
+            
         }
+
+        
     }
  
 

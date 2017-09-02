@@ -63,7 +63,7 @@
                                 <connections>
                                     <outlet property="flightNumberLabel" destination="lPZ-9v-WvI" id="8ui-od-dNw"/>
                                     <outlet property="launchDateLabel" destination="J0e-UD-kDs" id="sdz-3T-sB7"/>
-                                    <segue destination="aPQ-Rn-yHa" kind="show" id="05x-py-1xr"/>
+                                    <segue destination="aPQ-Rn-yHa" kind="show" identifier="DetailSegue" id="05x-py-1xr"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
